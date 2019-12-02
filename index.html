@@ -1,4 +1,141 @@
-<h1>i haven't put a proper website here</h1>
-<a href="/Ultratype">Ultratype</a><br>
-<a href="/snek">snek</a><br>
-<a href="/gba">Emulators</a>
+<head>
+    <title>Project Igneous</title>
+    <link href="https://fonts.googleapis.com/css?family=Lato|Roboto+Slab|Sulphur+Point&display=swap" rel="stylesheet">
+    <style>
+        #header {
+            position:fixed;
+            width: 100vw;
+            min-height: 4.5em;
+            max-height: 4.5em;
+            background: rgb(221,85,0);
+            background: linear-gradient(207deg, rgba(221,85,0,1) 0%, rgba(255,100,38,1) 100%);
+            text-align: center;
+            font-size: 175%;
+            font-family: "Roboto Slab",serif;
+            color: #fff;
+            line-height: 0.25;
+            text-decoration: none;
+            box-shadow: 0px 10px 18px #111;
+            position: absolute;
+            top:0;
+        }
+        #header > h2 {
+            font-size: 75%;
+        }
+        body {
+            margin: 0;
+            background: #222;
+            overflow-x:hidden; 
+        }
+        #container {
+            color: #fff;
+            max-width: 100vw;
+            width: 1000px;
+            min-height:10vh;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top: 10em;
+        }
+        .card {
+            min-width:300px;
+            max-width:300px;
+            background: #eee;
+            border-radius: 3px;
+            color: #111;
+            margin: 15px;
+            display:inline-block;
+        }
+        .cardImg {
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            width:300px;
+            height:150px;
+            background-image: url("./img/placeholder.png");
+        }
+        .cardContent {
+            padding: 8px;
+        }
+        .cardHeader {
+            margin-top: 3px;
+            margin-bottom:0px;
+            font-size: 150%;
+            font-family:"Sulphur Point",sans-serif;
+            font-weight: bolder;
+        }
+        .cardDescription {
+            margin-top: 3px;
+            margin-bottom:5px;
+            font-family:"Lato",sans-serif;
+        }
+        .cardAttribution {
+            font-family:"Lato",sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="https://github.com/projectigneous" id="header">
+        <h1>Project Igneous</h1>
+        <h2>by theLMGN</h2>
+    </a>
+    <div id="container">
+        <div class="card" onclick="location.reload('')">
+            <img src="img/placeholder.png" class="cardImg"></img>
+            <div class="cardContent">
+                <h3 class="cardHeader">Loading content</h3>
+                <p class="cardDescription">Please wait.</p>
+                <small class="cardAttribution">if you're stuck here something probably broke</small>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function tabopen(url) {
+            open(url)
+        }
+        function calculateDate(date) {
+            var d = new Date(new Date() - new Date(date))
+            console.log(d)
+            if (d.getFullYear() > 1970) {
+                return (d.getFullYear() - 1970) + " year" + d.getFullYear() > 1971 ? "s" : ""
+            }
+            if (d.getMonth() > 0) {
+                return (d.getMonth()) + " month" + (d.getMonth() > 1 ? "s" : "")
+            }
+            if (d.getDate() > 1) {
+                return (d.getDate() - 1) + " day" + (d.getDate() > 2 ? "s" : "")
+            }
+            if (d.getHours() > 0) {
+                return (d.getHours()) + " hour" + (d.getHours() > 1 ? "s" : "")
+            }
+            if (d.getMinutes() > 0) {
+                return (d.getMinutes()) + " minute" + (d.getMinutes() > 1 ? "s" : "")
+            }
+            return "a few seconds"
+        }
+        function buildCard(name,description,attribution) {
+            return `<div class="card" onclick="tabopen('/${name}')">
+                        <img src="img/${name}.png" class="cardImg" onerror="this.src='img/placeholder.png'"></img>
+                        <div class="cardContent">
+                            <h3 class="cardHeader">${name}</h3>
+                            <p class="cardDescription">${description}</p>
+                            <small class="cardAttribution">Last updated ${attribution} ago</small>
+                        </div>
+                    </div>`
+        } 
+        async function go() {
+            var ftch = await fetch("https://api.github.com/orgs/projectigneous/repos")
+            var j = await ftch.json()
+            console.log(j)
+            var h = ``
+            for (var repo of j) {
+                if (!repo.name.includes(".github.io")) {
+                    h += buildCard(repo.name,repo.description,calculateDate(repo.pushed_at))
+                }
+            }
+            document.querySelector("#container").innerHTML = h
+        }
+        go()
+    </script>
+
+</body>
