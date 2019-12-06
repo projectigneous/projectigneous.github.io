@@ -129,9 +129,12 @@
             console.log(j)
             var h = ``
             for (var repo of j) {
-                if (!repo.name.includes(".github.io")) {
+                try {
+                    var ftch = await fetch("/" + repo.name)
+                    var j = await ftch.json()
+                    console.log(j)
                     h += buildCard(repo.name,repo.description,calculateDate(repo.pushed_at))
-                }
+                } catch(e) {}
             }
             document.querySelector("#container").innerHTML = h
         }
