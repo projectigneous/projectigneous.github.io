@@ -130,7 +130,7 @@
             var h = ``
             for (var repo of j) {
                 try {
-                    var ftch = await fetch("/" + repo.name)
+                    var ftch = await fetch("/" + repo.name + "/igneous.json")
                     var j = await ftch.json()
                     console.log(j)
                     h += buildCard(repo.name,repo.description,calculateDate(repo.pushed_at))
