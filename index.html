@@ -165,13 +165,13 @@ box-shadow: 0px 0px 12px -5px rgba(0,0,0,0.75);
             }
             return "a few seconds"
         }
-        function buildCard(name,description,attribution,size) {
+        function buildCard(name,description,attribution,updated,size) {
             return `<div class="card" onclick="tabopen('https://projectigneous.github.io/${name}',${JSON.stringify(size)})">
                         <img src="img/${name}.png" class="cardImg" onerror="this.src='img/placeholder.png'"></img>
                         <div class="cardContent">
                             <h3 class="cardHeader">${name}</h3>
                             <p class="cardDescription">${description}</p>
-                            <small class="cardAttribution">Last updated ${attribution} ago</small>
+                            <small class="cardAttribution">${attribution} &bull; Updated ${updated} ago</small>
                         </div>
                     </div>`
         } 
@@ -185,7 +185,7 @@ box-shadow: 0px 0px 12px -5px rgba(0,0,0,0.75);
                     var ftch = await fetch("https://projectigneous.github.io/" + repo.name + "/igneous.json")
                     var j = await ftch.json()
                     console.log(j)
-                    h += buildCard(repo.name,repo.description,calculateDate(repo.pushed_at),j.opensInWindow)
+                    h += buildCard(repo.name,repo.description,j.developer, calculateDate(repo.pushed_at),j.opensInWindow)
                     document.querySelector("#container").innerHTML = h
                 } catch(e) {}
             }
