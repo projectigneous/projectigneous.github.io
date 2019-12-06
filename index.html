@@ -134,6 +134,7 @@
                     var j = await ftch.json()
                     console.log(j)
                     h += buildCard(repo.name,repo.description,calculateDate(repo.pushed_at))
+                    document.querySelector("#container").innerHTML = h
                 } catch(e) {}
             }
             document.querySelector("#container").innerHTML = h
