@@ -44,6 +44,17 @@
             color: #111;
             margin: 15px;
             display:inline-block;
+            transition: 0.25s transform, 0.25s box-shadow;
+            -webkit-box-shadow: 0px 0px 12px -5px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 12px -5px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 12px -5px rgba(0,0,0,0.75);
+        }
+        .card:hover {
+            cursor:pointer;
+            transform: scale(1.05);
+            -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+            box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
         }
         .cardImg {
             border-top-left-radius: 3px;
